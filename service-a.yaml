@@ -1,0 +1,25 @@
+# service-a-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-a
+  labels:
+    app: service-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-a
+  template:
+    metadata:
+      labels:
+        app: service-a
+    spec:
+      containers:
+      - name: service-a
+        image: shicha/service-a:latest
+        env:
+        - name: SERVICE_B_URL
+          value: "http://service-b.liftoff-test.akadns.net:30080" # Replace <NodeIP> with the external IP of a node in Cluster 2
+        ports:
+        - containerPort: 80
